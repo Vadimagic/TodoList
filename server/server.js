@@ -1,14 +1,14 @@
 import 'colors'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
 import morgan from 'morgan'
 
-import { errorHandler, notFound } from './app/middleware/error.middleware.js'
-
-import authRoutes from './app/auth/auth.routes.js'
-import { prisma } from './app/prisma.js'
-import todoRoutes from './app/todos/todos.routes.js'
+import { errorHandler, notFound } from './middlewares/error.middleware.js'
+import { prisma } from './prisma/prisma.js'
+import todoRoutes from './router/todos.routes.js'
+import userRoutes from './router/user.routes.js'
 
 dotenv.config()
 
@@ -20,11 +20,12 @@ async function main() {
 	}
 	app.use(cors())
 	app.use(express.json())
+	app.use(cookieParser())
 
-	app.use('/api/todos', todoRoutes)
-	app.use('/api/auth', authRoutes)
+	app.use('/api/auth', userRoutes)
+	app.use('/api/todo', todoRoutes)
 
-	// app.use(notFound)
+	app.use(notFound)
 	app.use(errorHandler)
 
 	const PORT = process.env.PORT || 5000
