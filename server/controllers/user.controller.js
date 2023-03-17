@@ -1,5 +1,4 @@
 import asyncHandler from 'express-async-handler'
-import { validationResult } from 'express-validator'
 
 import { ApiError } from '../exceptions/api-error.js'
 import userService from '../service/user.service.js'
@@ -12,11 +11,11 @@ class UserController {
 	*/
 	register = asyncHandler(async (req, res, next) => {
 		try {
-			const errors = validationResult(req)
-			if (!errors.isEmpty()) {
+			const { name, password, role } = req.body
+			const checkLengthPassword = password.length >= 3 && password.length <= 32
+			if (!checkLengthPassword) {
 				return next(ApiError.BadRequest('Некорректные данные'))
 			}
-			const { name, password, role } = req.body
 			const userData = await userService.registration(name, password, role)
 			res.cookie('refreshToken', userData.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
