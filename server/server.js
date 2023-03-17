@@ -10,6 +10,8 @@ import { prisma } from './prisma/prisma.js'
 import todoRoutes from './router/todo.routes.js'
 import userRoutes from './router/user.routes.js'
 
+const functions = require('firebase-functions')
+
 dotenv.config()
 
 const app = express()
@@ -19,20 +21,19 @@ app.use(
 		origin: process.env.CLIENT_URL
 	})
 )
+app.use(express.json())
+app.use(cookieParser())
+
+app.use('/api/auth', userRoutes)
+app.use('/api/todo', todoRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 async function main() {
 	if (process.env.NODE_ENV === 'development') {
 		app.use(morgan('dev'))
 	}
-	app.use(express.json())
-	app.use(cookieParser())
-
-	app.use('/api/auth', userRoutes)
-	app.use('/api/todo', todoRoutes)
-
-	app.use(notFound)
-	app.use(errorHandler)
-
 	const PORT = process.env.PORT || 5000
 	app.listen(
 		PORT,
@@ -52,3 +53,5 @@ main()
 		await prisma.$disconnect
 		process.exit()
 	})
+
+exports.api = functions.https.onRequest(app)

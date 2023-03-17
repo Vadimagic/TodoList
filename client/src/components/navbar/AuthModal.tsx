@@ -13,9 +13,10 @@ interface IProps {
 }
 
 const AuthModal = ({ showModal, handleShow, handleClose }: IProps) => {
-	const { user } = useContext(Context)
+	const { user, alerts } = useContext(Context)
 	const [name, setName] = useState("")
 	const [password, setPassword] = useState("")
+	const [loading, setLoading] = useState(false)
 
 	const closeModal = () => {
 		handleClose()
@@ -25,11 +26,19 @@ const AuthModal = ({ showModal, handleShow, handleClose }: IProps) => {
 
 	const submitFormAuth = async (event: FormEvent<HTMLFormElement>) => {
 		try {
+			setLoading(true)
 			event.preventDefault()
 			await user.login(name, password)
 			closeModal()
 		} catch (e) {
+			alerts.addAlert({
+				text: "Ошибка авторизации",
+				type: "danger",
+				timeout: 5000,
+			})
 			if (axios.isAxiosError(e)) alert(e.response?.data?.message)
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -65,7 +74,7 @@ const AuthModal = ({ showModal, handleShow, handleClose }: IProps) => {
 					<Button variant="secondary" onClick={closeModal}>
 						Закрыть
 					</Button>
-					<Button type="submit" variant="primary">
+					<Button type="submit" variant="primary" disabled={loading}>
 						Авторизоваться
 					</Button>
 				</Modal.Footer>

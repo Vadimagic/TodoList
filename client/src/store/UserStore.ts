@@ -44,7 +44,9 @@ export default class UserStore {
 			const { data } = await AuthService.login(name, password)
 			this.auth(data)
 		} catch (e) {
-			if (axios.isAxiosError(e)) console.error(e.response?.data?.message)
+			if (axios.isAxiosError(e)) {
+				throw new Error(e.response?.data?.message)
+			}
 		}
 	}
 
@@ -60,11 +62,12 @@ export default class UserStore {
 	async logout() {
 		try {
 			await AuthService.logout()
+		} catch (e) {
+			if (axios.isAxiosError(e)) console.error(e.response?.data?.message)
+		} finally {
 			localStorage.removeItem("token")
 			this.setIsAuth(false)
 			this.setUser({} as IUser)
-		} catch (e) {
-			if (axios.isAxiosError(e)) console.error(e.response?.data?.message)
 		}
 	}
 
@@ -79,6 +82,8 @@ export default class UserStore {
 			this.auth(data)
 		} catch (e) {
 			localStorage.removeItem("token")
+			this.setIsAuth(false)
+			this.setUser({} as IUser)
 			if (axios.isAxiosError(e)) console.error(e.response?.data?.message)
 		}
 	}
