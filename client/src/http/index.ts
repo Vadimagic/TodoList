@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 import { addAccessToken, refreshToken } from "./interseptors"
 
-export const API_URL = "https://todo-list-vadimagic.onrender.com"
+export const API_URL = "https://todo-list-vadimagic.onrender.com/api"
 
 const axiosServer: AxiosInstance = axios.create({
 	withCredentials: true,
