@@ -1,6 +1,6 @@
 import express from 'express'
 
-import todoController from '../controllers/todos.controller.js'
+import todoController from '../controllers/todo.controller.js'
 import { checkAuth } from '../middlewares/auth.middleware.js'
 import { checkRole } from '../middlewares/check-role.middleware.js'
 

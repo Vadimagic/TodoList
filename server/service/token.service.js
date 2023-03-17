@@ -81,7 +81,7 @@ class TokenService {
 	}
 
 	findToken = async refreshToken => {
-		const tokenData = await prisma.token.findFirstOrThrow({
+		const tokenData = await prisma.token.findFirst({
 			where: {
 				refreshToken
 			}

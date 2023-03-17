@@ -35,6 +35,11 @@ class TodoController {
 		const { name, email, text, completed } = req.body
 
 		try {
+			const oldTodo = await prisma.todo.findUnique({
+				where: {
+					id: +req.params.id
+				}
+			})
 			const todo = await prisma.todo.update({
 				where: {
 					id: +req.params.id
@@ -44,7 +49,7 @@ class TodoController {
 					email,
 					text,
 					completed,
-					changedText: true
+					changedText: oldTodo.text !== text
 				}
 			})
 

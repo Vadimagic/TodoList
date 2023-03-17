@@ -29,11 +29,11 @@ class UserController {
 	})
 
 	/*
-		@desc 		Auth user
+		@desc 		Login user
 		@route 		POST /api/auth/login
 		@access 	public
 	*/
-	auth = asyncHandler(async (req, res, next) => {
+	login = asyncHandler(async (req, res, next) => {
 		try {
 			const { name, password } = req.body
 			const userData = await userService.login(name, password)
@@ -49,7 +49,7 @@ class UserController {
 
 	/*
 		@desc 		Logout user
-		@route 		GET /api/auth/login
+		@route 		GET /api/auth/logout
 		@access 	public
 	*/
 	logout = asyncHandler(async (req, res, next) => {
@@ -67,14 +67,12 @@ class UserController {
 
 	/*
 		@desc 		Refresh user
-		@route 		GET /api/auth/login
+		@route 		GET /api/auth/refresh
 		@access 	public
 	*/
 	refresh = asyncHandler(async (req, res, next) => {
 		try {
-			console.log(req.cookies)
 			const { refreshToken } = req.cookies
-			console.log(refreshToken)
 			const userData = await userService.refresh(refreshToken)
 			res.cookie('refreshToken', userData.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,

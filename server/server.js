@@ -7,18 +7,23 @@ import morgan from 'morgan'
 
 import { errorHandler, notFound } from './middlewares/error.middleware.js'
 import { prisma } from './prisma/prisma.js'
-import todoRoutes from './router/todos.routes.js'
+import todoRoutes from './router/todo.routes.js'
 import userRoutes from './router/user.routes.js'
 
 dotenv.config()
 
 const app = express()
+app.use(
+	cors({
+		credentials: true,
+		origin: process.env.CLIENT_URL
+	})
+)
 
 async function main() {
 	if (process.env.NODE_ENV === 'development') {
 		app.use(morgan('dev'))
 	}
-	app.use(cors())
 	app.use(express.json())
 	app.use(cookieParser())
 
