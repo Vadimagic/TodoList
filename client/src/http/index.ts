@@ -1,16 +1,7 @@
-import axios, {
-	AxiosInstance,
-	AxiosRequestConfig,
-	InternalAxiosRequestConfig,
-} from "axios"
-import { useContext } from "react"
-import { Context } from "../main"
-import { IUser } from "../models/IUser"
-import { AuthResponse } from "../models/response/AuthResponse"
-import UserStore from "../store/UserStore"
+import axios, { AxiosInstance } from "axios"
 import { addAccessToken, refreshToken } from "./interseptors"
 
-export const API_URL = "http://localhost:5000/api"
+export const API_URL = "https://todo-list-vadimagic.onrender.com"
 
 const axiosServer: AxiosInstance = axios.create({
 	withCredentials: true,
