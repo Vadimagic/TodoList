@@ -16,6 +16,7 @@ export const refreshToken = async (error: any) => {
 				`${API_URL}/auth/refresh`,
 				{
 					withCredentials: true,
+					baseURL: API_URL,
 				}
 			)
 			localStorage.setItem("token", data.accessToken)
