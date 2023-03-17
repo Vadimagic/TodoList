@@ -10,8 +10,6 @@ import { prisma } from './prisma/prisma.js'
 import todoRoutes from './router/todo.routes.js'
 import userRoutes from './router/user.routes.js'
 
-const functions = require('firebase-functions')
-
 dotenv.config()
 
 const app = express()
