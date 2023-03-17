@@ -51,5 +51,3 @@ main()
 		await prisma.$disconnect
 		process.exit()
 	})
-
-exports.api = functions.https.onRequest(app)
