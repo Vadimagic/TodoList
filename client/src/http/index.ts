@@ -5,7 +5,7 @@ import axios, {
 } from "axios"
 import { AuthResponse } from "../models/response/AuthResponse"
 
-export const API_URL = "https://todo-list-vadimagic.onrender.com/api"
+export const API_URL = "https://todo-list-vadimagic.cyclic.app/api"
 
 const axiosServer: AxiosInstance = axios.create({
 	withCredentials: true,

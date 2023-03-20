@@ -1,9 +1,7 @@
-import 'colors'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
-import morgan from 'morgan'
 
 import { errorHandler, notFound } from './middlewares/error.middleware.js'
 import { prisma } from './prisma/prisma.js'
@@ -15,9 +13,6 @@ dotenv.config()
 const app = express()
 
 async function main() {
-	if (process.env.NODE_ENV === 'development') {
-		app.use(morgan('dev'))
-	}
 	app.use(
 		cors({
 			credentials: true,
@@ -36,8 +31,7 @@ async function main() {
 	app.listen(
 		PORT,
 		console.log(
-			`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.green
-				.bold
+			`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
 		)
 	)
 }
