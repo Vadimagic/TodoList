@@ -35,7 +35,7 @@ axiosServer.interceptors.response.use(
 				return axiosServer.request(originalRequest)
 			} catch (e) {
 				localStorage.removeItem("token")
-				if (axios.isAxiosError(e)) console.error(e.response?.data.message)
+				throw e
 			}
 		} else {
 			throw error

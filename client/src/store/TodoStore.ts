@@ -105,7 +105,9 @@ export default class TodoStore {
 			await TodoService.updateTodo(id, todo)
 			this.getTodoList()
 		} catch (e) {
-			if (axios.isAxiosError(e)) console.error(e.response?.data?.message)
+			if (axios.isAxiosError(e)) {
+				throw new Error(e.response?.data?.message)
+			}
 		}
 	}
 }

@@ -8,19 +8,22 @@ import {
 
 export default class TodoService {
 	static async createTodo(todo: ITodoData): Promise<AxiosResponse<ITodo>> {
-		return axiosServer.post<ITodo>("/todo/create", todo)
+		const response = await axiosServer.post<ITodo>("/todo/create", todo)
+		return response
 	}
 
 	static async getTodoList(
 		params: GetTodoListParams
 	): Promise<AxiosResponse<TodoResponse>> {
-		return axiosServer.post<TodoResponse>("/todo/list", params)
+		const response = await axiosServer.post<TodoResponse>("/todo/list", params)
+		return response
 	}
 
 	static async updateTodo(
 		id: number,
 		data: Partial<ITodo>
 	): Promise<AxiosResponse<ITodo>> {
-		return axiosServer.patch<ITodo>(`/todo/${id}`, data)
+		const response = await axiosServer.patch<ITodo>(`/todo/${id}`, data)
+		return response
 	}
 }

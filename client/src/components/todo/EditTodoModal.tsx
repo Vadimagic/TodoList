@@ -19,7 +19,7 @@ const EditTodoModal = ({ todo: todoProp, showModal, handleClose }: IProps) => {
 	const [text, setText] = useState(todoProp.text)
 	const [loading, setLoading] = useState(false)
 
-	const { todo, user } = useContext(Context)
+	const { todo, user, alerts } = useContext(Context)
 
 	useEffect(() => {
 		setCompleted(todoProp.completed)
@@ -36,6 +36,12 @@ const EditTodoModal = ({ todo: todoProp, showModal, handleClose }: IProps) => {
 					text,
 				})
 				handleClose()
+			} catch (e) {
+				alerts.addAlert({
+					text: "Не удалось обновить Todo Item",
+					type: "danger",
+					timeout: 5000,
+				})
 			} finally {
 				setLoading(false)
 			}

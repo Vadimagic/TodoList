@@ -36,7 +36,6 @@ const AuthModal = ({ showModal, handleShow, handleClose }: IProps) => {
 				type: "danger",
 				timeout: 5000,
 			})
-			if (axios.isAxiosError(e)) alert(e.response?.data?.message)
 		} finally {
 			setLoading(false)
 		}
